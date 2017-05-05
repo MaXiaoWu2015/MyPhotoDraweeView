@@ -229,8 +229,8 @@ public class Attacher implements IAttacher, View.OnTouchListener, OnScaleDragGes
     }
 
     private float getMatrixValue(Matrix matrix, int whichValue) {
-        matrix.getValues(mMatrixValues);
-        return mMatrixValues[whichValue];
+        matrix.getValues(mMatrixValues);//copy当前Matrix的值到一个数组里
+        return mMatrixValues[whichValue];//通过下标取对应的值,例如Matrix.SCALE_X
     }
 
     public Matrix getDrawMatrix() {
@@ -254,9 +254,9 @@ public class Attacher implements IAttacher, View.OnTouchListener, OnScaleDragGes
             draweeView.invalidate();
         }
     }
-
+    //TODO:为什么要进行边界判断----移动时进行边界判断
     public boolean checkMatrixBounds() {
-        RectF rect = getDisplayRect(getDrawMatrix());
+        RectF rect = getDisplayRect(getDrawMatrix());//获取和图片变换后大小一样的Rect
         if (rect == null) {
             return false;
         }
@@ -302,8 +302,8 @@ public class Attacher implements IAttacher, View.OnTouchListener, OnScaleDragGes
         if (draweeView == null || (mImageInfoWidth == -1 && mImageInfoHeight == -1)) {
             return null;
         }
-        mDisplayRect.set(0.0F, 0.0F, mImageInfoWidth, mImageInfoHeight);
-        draweeView.getHierarchy().getActualImageBounds(mDisplayRect);
+        mDisplayRect.set(0.0F, 0.0F, mImageInfoWidth, mImageInfoHeight);//最原始的未经过任何处理的Image的长宽
+        draweeView.getHierarchy().getActualImageBounds(mDisplayRect);//但是显示出来的可能是Hierarchy通过ScaleTypeDrawable处理过的Image边界
         matrix.mapRect(mDisplayRect);
         return mDisplayRect;
     }
