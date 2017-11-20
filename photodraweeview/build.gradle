@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 version = "1.1.2"
 def int version_code = 112
@@ -28,4 +29,30 @@ dependencies {
 }
 
 //apply from: "upload-jcenter.gradle"
+uploadArchives {
+    repositories {
+        mavenDeployer {
+//            String env = getAndroidSdkDir()
+//            if (env == null) {
+//                println("don't have env: android_home ,please set...")
+//                if (env == null) {
+//                    throw new RuntimeException(
+//                            "Unable to determine Android SDK directory.")
+//                }
+//            }
 
+//            def deployPath = file(env+"/extras/android/m2repository/")
+            String repository_url = "http://maven.mbd.qiyi.domain/nexus/content/repositories/mcg-paopao-android"
+            println(repository_url)
+
+
+            repository(url: uri(repository_url)) {
+                authentication(userName: "mcg-paopao-android", password: "12345")
+            }
+
+            pom.groupId = 'matingting.test'
+            pom.artifactId = 'photodraweeview'
+            pom.version = '1.0.8'
+        }
+    }
+}
