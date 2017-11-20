@@ -52,7 +52,7 @@ uploadArchives {
 
             pom.groupId = 'matingting.test'
             pom.artifactId = 'photodraweeview'
-            pom.version = '1.0.8'
+            pom.version = '1.0.9'
         }
     }
 }
